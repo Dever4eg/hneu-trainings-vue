@@ -9,29 +9,29 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/suppliers",
+    redirect: "/suppliers"
   },
   {
     path: "/suppliers",
     name: "Suppliers",
-    component: Suppliers,
+    component: Suppliers
   },
   {
     path: "/products",
     name: "Products",
-    component: Products,
+    component: Products
   },
   {
     path: "/invoices",
     name: "Invoices",
-    component: Invoices,
+    component: Invoices
   }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 export default router;
