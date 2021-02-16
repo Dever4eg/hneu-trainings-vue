@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Постачальники</h3>
+    <h2>Постачальники</h2>
 
     <v-card
       v-for="item in items"
