@@ -1,6 +1,23 @@
 <template>
   <v-layout column>
-    <h5 class="text-h5 font-weight-light mt-3 mb-4">Поставки</h5>
+    <div class="d-flex align-center">
+      <h5 class="text-h5 font-weight-light mt-3 mb-4">Поставки</h5>
+      <InvoiceCreateFormDialog>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="mb-2 ml-4 mx-2"
+            fab
+            dark
+            x-small
+            color="gray"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon dark>mdi-plus</v-icon>
+          </v-btn>
+        </template>
+      </InvoiceCreateFormDialog>
+    </div>
 
     <v-layout v-if="loading" class="justify-center">
       <v-progress-circular
@@ -16,7 +33,9 @@
       class="my-3 px-3"
     >
       <v-card-text class="d-flex justify-space-between mt-3">
-        <span class="text--primary font-weight-medium">{{ supplier.name }}</span>
+        <span class="text--primary font-weight-medium">{{
+          supplier.name
+        }}</span>
         <span>{{ createdAt | moment("DD.MM.YYYY HH:mm") }}</span>
       </v-card-text>
       <v-card-text>
@@ -53,8 +72,11 @@
 </template>
 
 <script>
+import InvoiceCreateFormDialog from "@/components/Invoices/InvoiceCreateFormDialog";
+
 export default {
   name: "Invoices",
+  components: { InvoiceCreateFormDialog },
   data() {
     return {
       loading: false,
