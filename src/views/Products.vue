@@ -17,7 +17,10 @@
           image,
           name,
           price,
-          price_history: priceHistory,
+          price_history: priceHistory = [
+            { price: '400', date: '17.02.2021 17:45' },
+            { price: '350', date: '16.02.2021 15:19' }
+          ],
           vendor_code: vendorCode,
           supplier_name: supplierName
         } in products"

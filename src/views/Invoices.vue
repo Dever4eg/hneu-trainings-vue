@@ -35,9 +35,9 @@
               <tr v-for="(product, index) in products" :key="product.id">
                 <td>{{ index + 1 }}</td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
+                <td>${{ product.price }}</td>
                 <td>{{ product.count }}</td>
-                <td>{{ product.price * product.count }}</td>
+                <td>${{ product.price * product.count }}</td>
               </tr>
             </tbody>
           </template>
@@ -45,7 +45,7 @@
       </v-card-text>
       <v-card-text class="d-flex justify-end text--primary font-weight-medium">
         <p>
-          Всього: {{ products.reduce((total, item) => total + (item.price * item.count), 0) }}
+          Всього: ${{ products.reduce((total, item) => total + (item.price * item.count), 0) }}
         </p>
       </v-card-text>
     </v-card>
@@ -57,7 +57,7 @@ export default {
   name: "Invoices",
   data() {
     return {
-      loading: true,
+      loading: false,
       invoices: []
     };
   },
@@ -66,21 +66,27 @@ export default {
   },
   methods: {
     fetchInvoices() {
+      this.loading = true;
       setTimeout(() => {
         this.invoices = [
           {
             id: 1,
             supplier: {
-              name: "Harkawsk Trah Zavod"
+              name: "Bob"
             },
             products: [
               {
-                count: 2,
-                name: "яблоко",
+                count: 5,
+                name: "Steering Wheel",
                 price: 300
+              },
+              {
+                count: 10,
+                name: "Seat Belt",
+                price: 150
               }
             ],
-            created_at: new Date()
+            created_at: "16.02.2021 15:15"
           }
         ];
         this.loading = false;

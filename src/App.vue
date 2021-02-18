@@ -95,11 +95,17 @@ export default {
           headers: { ...getAuthHeader() }
         })
         .then(() => {
-          this.$store.commit("logout");
-          this.$router.push("/login");
+          // TODO: uncomment it when CORS issue will be fixed
+          // this.$store.commit("logout");
+          // this.$router.push("/login");
         })
         .catch(error => {
           console.log(error);
+        })
+        // TODO: remove finally block when CORS issue will be fixed
+        .finally(() => {
+          this.$store.commit("logout");
+          this.$router.push("/login");
         });
     }
   }
