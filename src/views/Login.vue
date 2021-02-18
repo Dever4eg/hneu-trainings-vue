@@ -92,12 +92,13 @@ export default {
           axios
             .post("/sign_in", payload)
             .then(response => {
-              this.loading = false;
               this.$store.commit("login", response.data.data.user);
               this.$router.push("/");
             })
             .catch(() => {
               this.error = "Неправильні email або пароль!";
+            })
+            .finally(() => {
               this.loading = false;
             });
         }

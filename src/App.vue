@@ -39,7 +39,7 @@
     </v-navigation-drawer>
 
     <v-main>
-      <v-layout fill-height class="px-10 py-5">
+      <v-layout fill-height class="px-10 py-5 grey lighten-5">
         <router-view></router-view>
       </v-layout>
     </v-main>

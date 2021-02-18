@@ -1,30 +1,40 @@
 <template>
-  <div>
-    <h2>Постачальники</h2>
+  <v-layout column>
+    <h5 class="text-h5 font-weight-light mt-3 mb-4">Постачальники</h5>
 
-    <v-card v-for="item in items" :key="item.id" class="mx-auto my-5" outlined>
-      <v-list-item>
-        <v-list-item-content>
-          <div class="overline">
-            {{ item.name }}
-          </div>
-          <v-list-item-subtitle>
-            <p>{{ item.email }}</p>
-            <p>{{ item.phone }}</p>
-          </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+    <v-layout v-if="loading" class="justify-center">
+      <v-progress-circular
+        :size="50"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </v-layout>
+
+    <v-card
+      v-for="{ id, name, address, phone } in suppliers"
+      :key="id"
+      class="my-3"
+    >
+      <v-card-title>
+        {{ name }}
+      </v-card-title>
+      <v-card-text class="text--primary font-weight-light">
+        <p v-if="address">{{ address }}</p>
+        <p v-if="phone">{{ phone }}</p>
+      </v-card-text>
     </v-card>
-  </div>
+  </v-layout>
 </template>
 
 <script>
+import { getAuthHeader } from "../helpers/auth";
+
 export default {
   name: "Suppliers",
   data() {
     return {
-      loading: true,
-      items: []
+      loading: false,
+      suppliers: []
     };
   },
   mounted() {
@@ -32,29 +42,16 @@ export default {
   },
   methods: {
     fetchSuppliers() {
-      setTimeout(() => {
-        this.items = [
-          {
-            id: 1,
-            name: "Fucking partner",
-            phone: "432423523",
-            email: "fuck@mail.ua"
-          },
-          {
-            id: 2,
-            name: "Partner without dick",
-            phone: "432423523",
-            email: "dick@mail.ua"
-          },
-          {
-            id: 3,
-            name: "Partner right from ass",
-            phone: "432423523",
-            email: "ass@mail.ua"
-          }
-        ];
-        this.loading = false;
-      }, 300);
+      this.loading = true;
+      // eslint-disable-next-line no-undef
+      axios
+        .get("/suppliers", { headers: { ...getAuthHeader() } })
+        .then(response => {
+          this.suppliers = response.data.data.suppliers;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
 };
