@@ -46,7 +46,7 @@
                     required
                   />
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="3">
                   <v-text-field
                     v-model="form.products[index].count"
                     hide-details
@@ -58,6 +58,19 @@
                     :error-messages="errors.collect(`products[${index}].count`)"
                     required
                   />
+                </v-col>
+                <v-col
+                  cols="1"
+                  class="d-flex align-center d-flex align-end justify-end"
+                >
+                  <v-btn
+                    icon
+                    color="grey"
+                    :disabled="form.products.length < 2"
+                    @click="removeInvoiceProduct(index)"
+                  >
+                    <v-icon dark>mdi-close</v-icon>
+                  </v-btn>
                 </v-col>
               </v-row>
             </div>
@@ -158,6 +171,9 @@ export default {
     },
     addInvoiceProduct() {
       this.form.products.push(makeEmptyInvoiceProduct());
+    },
+    removeInvoiceProduct(index) {
+      this.form.products = this.form.products.filter((_, i) => index !== i);
     },
     submit() {
       this.$validator.validateAll().then(result => {
