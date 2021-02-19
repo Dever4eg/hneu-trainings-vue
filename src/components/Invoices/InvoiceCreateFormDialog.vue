@@ -77,7 +77,7 @@
             <v-btn
               outlined
               text
-              class="font-weight-thin grey--text="
+              class="font-weight-regular grey--text="
               style="width: 100%"
               @click="addInvoiceProduct"
             >
@@ -113,12 +113,15 @@
 import { getAuthHeader } from "@/helpers/auth";
 import axios from "axios";
 
-const makeEmptyInvoiceProduct = () => {
-  return {
-    supplierProduct: null,
-    count: 1
-  };
-};
+const makeEmptyInvoiceProduct = () => ({
+  supplierProduct: null,
+  count: 1
+});
+
+const makeEmptyForm = () => ({
+  supplier: null,
+  products: [makeEmptyInvoiceProduct()]
+});
 
 export default {
   name: "InvoiceCreateFormDialog.vue",
@@ -129,10 +132,7 @@ export default {
       suppliers: [],
       supplierProducts: [],
       supplierProductsLoading: false,
-      form: {
-        supplier: null,
-        products: [makeEmptyInvoiceProduct()]
-      }
+      form: makeEmptyForm()
     };
   },
   computed: {
@@ -190,6 +190,7 @@ export default {
             .post("/invoice", payload)
             .then(() => {
               this.$emit("created");
+              this.form = makeEmptyForm();
               this.dialog = false;
             })
             .finally(() => {
